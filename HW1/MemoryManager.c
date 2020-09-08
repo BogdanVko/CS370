@@ -76,20 +76,31 @@ int get_arr_size(int rand)
  */
 int get_running_count()
 {
+  
    // TODO:
   int count = 0;
-  int iter = get_iteration_count(8);
+  int iter = get_iteration_count( rand() );
+  printf("[MemoryManager] Number of Iterations: %d\n" , iter);
+
   for(int i = 0; i < iter; i++){
-    int arr_size = get_arr_size(9);
+
+    int arr_size = get_arr_size( rand() );
+
     int *array = (int*)malloc(arr_size * sizeof(int));
+    
+
     for(int j = 0; j < arr_size; j++){
       array[j] = rand();
     }
       int median = return_median(array,arr_size);
-      if(median % 13 == 0){ count+=1;}
+      if((median % 13) == 0){
+	      count+=1;
+      }
+      
       free(array);
     }
-  return  count;
+  
+  return count;
     
   }
   
