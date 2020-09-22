@@ -31,14 +31,14 @@ coordinator: Coordinator.o
 # Builds checker executable
 checker: Checker.o
 	$(GCC) $(LD_FLAGS) Checker.o -o $(EXE2)
-
+	
 # Recompile C objects if header files change
 $(C_OBJECTS): ${C_HEADERS}
 
 # Cleans up object files and executables
 clean:
 	rm -f *.o *~ $(EXE1) $(EXE2)
-
+	
 # Packages directory files into .zip file
 package:
-	zip -r Bogdan-VASILCHENKO-HW2.zip Coordinator.c Checker.c Checker.h Makefile README.txt
+	zip -r FIRSTNAME-LASTNAME-HW2.zip Coordinator.c Checker.c Checker.h Makefile README.txt
