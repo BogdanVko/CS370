@@ -1,3 +1,3 @@
 #include <stdio.h>
 
-void doo();
+int main(int argc, char **argv);

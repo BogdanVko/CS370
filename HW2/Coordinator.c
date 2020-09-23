@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 {
     if (argc != 6){
         printf("Enter only 5 arguments!\n");
-        return 1;
+        return 0;
 
     }
     int id;
@@ -26,6 +26,7 @@ int main(int argc, char **argv)
 
         if(id == 0) {
             //Child
+            
             execlp("checker", "checker", argv[1], argv[i+2], NULL);
             exit(0);
 
@@ -34,7 +35,7 @@ int main(int argc, char **argv)
             printf("Coordinator: wainting for process [%u].\n", id);
             int updt;
 
-            waitpid (id, &updt, 0);
+            waitpid(id, &updt, 0);
             if(WIFEXITED(updt)){
                 int status = WEXITSTATUS(updt);
                 printf("Coordinator: child process %u retuned: %d.\n", id, status);
@@ -45,5 +46,5 @@ int main(int argc, char **argv)
     }
     printf("Coordinator: exiting.\n");
 
-    return 0;
+    return 1;
 }
