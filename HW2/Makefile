@@ -41,4 +41,4 @@ clean:
 	
 # Packages directory files into .zip file
 package:
-	zip -r FIRSTNAME-LASTNAME-HW2.zip Coordinator.c Checker.c Checker.h Makefile README.txt
+	zip -r Bogdan-Vasilchenko-HW2.zip Coordinator.c Checker.c Checker.h Makefile README.txt

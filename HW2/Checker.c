@@ -17,11 +17,11 @@ int main(int argc, char **argv)
     if (y % x == 0){
         printf("Checker process [%u]: %d *IS* divisible by %d.\n", id, y, x);
         printf("Checker process [%u]: Returning %d.\n", id, 1);
-        return 1;
+        exit(1);
     }else{
         printf("Checker process [%u]: %d *IS NOT* divisible by %d.\n", id, y, x);
         printf("Checker process [%u]: Returning %d.\n", id, 0);
-        return 0; 
+        exit(0);
     }
     
 

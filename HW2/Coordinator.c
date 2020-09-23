@@ -23,13 +23,15 @@ int main(int argc, char **argv)
     for(int i = 0; i < 4; i++){
 
         id=fork();
-
+        if (id < 0){
+            fprintf(stderr, "Process Failed!");
+            return 1;
+        }
         if(id == 0) {
             //Child
             
-            execlp("checker", "checker", argv[1], argv[i+2], NULL);
-            exit(0);
-
+            execlp("./checker", "Checker", argv[1], argv[i+2], NULL);
+            
         }else{
             printf("Coordinator: forked process with ID %u.\n", id);
             printf("Coordinator: wainting for process [%u].\n", id);
@@ -43,8 +45,9 @@ int main(int argc, char **argv)
             }
 
         }
+        printf("Coordinator: exiting.\n");
     }
+    
     printf("Coordinator: exiting.\n");
-
-    return 1;
+    return 0;
 }
