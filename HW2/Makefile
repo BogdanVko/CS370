@@ -40,4 +40,4 @@ clean:
 	
 # Packages directory files into .zip file
 package:
-	zip -r FIRSTNAME-LASTNAME-HW3.zip Coordinator.c Checker.c Makefile README.txt
+	zip -r Bogdan-Vasilchenko-HW3.zip Coordinator.c Checker.c Makefile
