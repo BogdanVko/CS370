@@ -1,5 +1,5 @@
 # ******************************************************
-# This is the Makefile for Homework 2.
+# This is the Makefile for Homework 3.
 # Please replace the .zip file name with the appropriate
 # file name per your assignment instructions.
 # ******************************************************
@@ -7,7 +7,6 @@
 # List of files
 C_SOURCES = Coordinator.c Checker.c
 C_OBJECTS = Coordinator.o Checker.o
-C_HEADERS = Checker.h
 
 EXE1 = coordinator
 EXE2 = checker
@@ -33,7 +32,7 @@ checker: Checker.o
 	$(GCC) $(LD_FLAGS) Checker.o -o $(EXE2)
 	
 # Recompile C objects if header files change
-$(C_OBJECTS): ${C_HEADERS}
+$(C_OBJECTS): ${C_SOURCES}
 
 # Cleans up object files and executables
 clean:
@@ -41,4 +40,4 @@ clean:
 	
 # Packages directory files into .zip file
 package:
-	zip -r Bogdan-Vasilchenko-HW2.zip Coordinator.c Checker.c Checker.h Makefile README.txt
+	zip -r FIRSTNAME-LASTNAME-HW3.zip Coordinator.c Checker.c Makefile README.txt

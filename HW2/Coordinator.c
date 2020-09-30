@@ -1,15 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h> 
-#include <sys/wait.h>
-#include <sys/ipc.h>
-#include <sys/shm.h>
-#include <sys/types.h>
-#include <sys/sem.h>
-#include <sys/resource.h>
-#include <sys/mman.h>
-
+#include <stdio.h>               
+#include <stdlib.h>       
+#include <fcntl.h>           
+#include <unistd.h>        
+#include <sys/wait.h>    
+#include <sys/ipc.h>        
+#include <sys/shm.h>              
+#include <sys/types.h>     
+#include <sys/sem.h>            
+#include <sys/resource.h>           
+#include <sys/mman.h>           
+        
 
 
 int main(int argc, char **argv)
@@ -19,20 +19,37 @@ int main(int argc, char **argv)
         return 0;
 
     }
-    int id;
+    
     for(int i = 0; i < 4; i++){
-
+    int id;
+    int p[2];
+        
+    pipe(p);
+        
         id=fork();
+        close(p[0]); 
+        int shmID = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 0666); //get mem
+        printf("Coordinator: Created shared memory with ID: %d\n", shmID);
+
+        int *shmPtr = (int *) shmat(shmID, NULL, 0);
+
+        
+        
+
+         
         if (id < 0){
             fprintf(stderr, "Process Failed!");
-            return 1;
+            exit(1);
         }
         if(id == 0) {
             //Child
+            write(p[1], &shmID, sizeof(int));
+            close(p[1]);
+
+            execlp("./checker", "Checker", argv[1], argv[i+2], p[0], NULL);
             
-            execlp("./checker", "Checker", argv[1], argv[i+2], NULL);
-            
-        }else{
+        }else{ //Parent
+
             printf("Coordinator: forked process with ID %u.\n", id);
             printf("Coordinator: wainting for process [%u].\n", id);
             int updt;
@@ -45,7 +62,7 @@ int main(int argc, char **argv)
             }
 
         }
-        printf("Coordinator: exiting.\n");
+        //printf("Coordinator: exiting.\n");
     }
     
     printf("Coordinator: exiting.\n");

@@ -6,13 +6,23 @@
 #include "Checker.h"
 
 int main(int argc, char **argv)
-{
+{  
+    int n;
+    read(argv[1], &n, sizeof(int));
+    int* ptr =(int *) shmat(n, NULL, 0);
+    
+
+    if (argc != 3){
+        printf("Enter 3 arguments!\n");
+        return 0;
+
+    }
     
     int id;
     id =  getpid();
-    printf("Checker process [%u]: Starting.\n", id); 
-    int x = atoi(argv[1]);
-    int y = atoi(argv[2]);
+    printf("Checker process [%u]: read 4 bytes containing shm ID %d\n", id, atoi(argv[1])); 
+    int x = atoi(argv[2]);
+    int y = atoi(argv[3]);
     
     if (y % x == 0){
         printf("Checker process [%u]: %d *IS* divisible by %d.\n", id, y, x);
