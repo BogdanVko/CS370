@@ -45,8 +45,10 @@ int main(int argc, char **argv)
             //Child
             write(p[1], &shmID, sizeof(int));
             close(p[1]);
+            char str[4*sizeof(char)];
+            sprintf(str, "%d", 42);
 
-            execlp("./checker", "Checker", argv[1], argv[i+2], p[0], NULL);
+            execlp("./checker", "Checker", str, argv[1], argv[i+2], NULL);
             
         }else{ //Parent
 
@@ -54,6 +56,14 @@ int main(int argc, char **argv)
             printf("Coordinator: wainting for process [%u].\n", id);
             int updt;
 
+
+// 
+            printf("Coordinator: forked process with ID %d.\n", id);
+			close(p[0]);
+			write(p[1], &shmID, sizeof(int));
+			close(p[1]);
+			printf("Coordinator: wrote shm ID %d to pipe (%d bytes)\n", shmID, (int) sizeof(shmID));
+// 
             waitpid(id, &updt, 0);
             if(WIFEXITED(updt)){
                 int status = WEXITSTATUS(updt);

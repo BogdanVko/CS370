@@ -7,8 +7,13 @@
 
 int main(int argc, char **argv)
 {  
+
+    
     int n;
-    read(argv[1], &n, sizeof(int));
+    read(atoi(argv[0]), &n, sizeof(int));
+    close(argv[0]);
+
+
     int* ptr =(int *) shmat(n, NULL, 0);
     
 
@@ -26,13 +31,18 @@ int main(int argc, char **argv)
     
     if (y % x == 0){
         printf("Checker process [%u]: %d *IS* divisible by %d.\n", id, y, x);
-        printf("Checker process [%u]: Returning %d.\n", id, 1);
-        exit(1);
+        memset(ptr, 1, sizeof(int));
+		printf("Checker process [%d]: wrote result (1) to shared memory.\n", getpid());
     }else{
         printf("Checker process [%u]: %d *IS NOT* divisible by %d.\n", id, y, x);
-        printf("Checker process [%u]: Returning %d.\n", id, 0);
-        exit(0);
+        memset(ptr, 0, sizeof(int));
+		printf("Checker process [%d]: wrote result (0) to shared memory.\n", getpid());
     }
-    
+
+    int shret = shmdt(ptr);
+
+	if (shret == -1){
+		perror("BAD RETURN");
+        return 1;
 
 }
