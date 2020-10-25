@@ -65,6 +65,7 @@ int main(int argc, char *argv[])
         }
         a_counter++;
     }
+    
     int actual_count = 0;
     while (actual_count < 4)
     {
